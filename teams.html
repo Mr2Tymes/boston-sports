@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Boston Sports | Teams</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@400;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    :root { --red: #C8102E; --navy: #0D1B2A; --navy-mid: #1B2A3B; --navy-light: #1e3a5f; --white: #F0F4F8; --accent: #4A90C4; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Barlow', sans-serif; background-color: var(--navy); color: var(--white); line-height: 1.6; }
+    a { text-decoration: none; color: inherit; }
+
+    header { background: linear-gradient(135deg, var(--red) 0%, #a00d22 100%); padding: 28px 40px; text-align: center; border-bottom: 4px solid var(--navy); }
+    header h1 { font-family: 'Bebas Neue', sans-serif; font-size: 4rem; letter-spacing: 6px; color: var(--white); text-shadow: 3px 3px 0px rgba(0,0,0,0.4); }
+    header p { font-size: 0.95rem; color: rgba(255,255,255,0.85); letter-spacing: 3px; text-transform: uppercase; margin-top: 6px; }
+
+    nav { background-color: var(--navy-mid); border-bottom: 3px solid var(--red); position: sticky; top: 0; z-index: 100; }
+    nav ul { display: flex; list-style: none; justify-content: center; }
+    nav ul li { position: relative; }
+    nav ul li a { display: block; padding: 16px 28px; font-weight: 700; font-size: 0.85rem; letter-spacing: 2px; text-transform: uppercase; color: var(--white); transition: background 0.2s; }
+    nav ul li a:hover, nav ul li a.active { background-color: var(--red); }
+    nav ul li .dropdown { display: none; position: absolute; top: 100%; left: 0; background-color: var(--navy-light); border-top: 3px solid var(--red); min-width: 160px; z-index: 200; }
+    nav ul li .dropdown li a { padding: 12px 20px; font-size: 0.8rem; border-bottom: 1px solid rgba(255,255,255,0.08); }
+    nav ul li:hover .dropdown { display: block; }
+
+    .page-hero { background: linear-gradient(135deg, var(--navy-light) 0%, var(--navy-mid) 100%); padding: 40px; text-align: center; border-bottom: 4px solid var(--red); }
+    .page-hero h2 { font-family: 'Bebas Neue', sans-serif; font-size: 3rem; letter-spacing: 5px; color: var(--white); }
+    .page-hero p { color: rgba(240,244,248,0.7); margin-top: 8px; letter-spacing: 1px; }
+
+    .tab-bar { display: flex; justify-content: center; background-color: var(--navy-mid); border-bottom: 3px solid var(--accent); }
+    .tab-bar button { background: none; border: none; color: var(--white); font-family: 'Barlow', sans-serif; font-weight: 700; font-size: 0.85rem; letter-spacing: 2px; text-transform: uppercase; padding: 16px 40px; cursor: pointer; transition: background 0.2s; }
+    .tab-bar button:hover, .tab-bar button.active { background-color: var(--red); }
+
+    .team-section { display: none; padding: 60px 40px; }
+    .team-section.active { display: block; }
+
+    .team-header { display: flex; align-items: center; gap: 30px; margin-bottom: 40px; border-bottom: 3px solid var(--accent); padding-bottom: 30px; }
+    .team-logo { width: 130px; height: 130px; background-color: var(--navy); border: 3px solid var(--accent); display: flex; align-items: center; justify-content: center; flex-shrink: 0; overflow: hidden; padding: 10px; border-radius: 4px; }
+    .team-info h3 { font-family: 'Bebas Neue', sans-serif; font-size: 2.5rem; letter-spacing: 4px; color: var(--white); }
+    .team-info p { color: rgba(240,244,248,0.55); font-size: 0.9rem; letter-spacing: 1px; margin-top: 4px; }
+    .team-info .record { font-family: 'Bebas Neue', sans-serif; font-size: 1.2rem; color: var(--accent); margin-top: 8px; letter-spacing: 2px; }
+
+    .team-stats-row { display: flex; gap: 24px; flex-wrap: wrap; margin-top: 16px; padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.08); }
+    .team-stat { display: flex; flex-direction: column; }
+    .team-stat .ts-val { font-family: 'Bebas Neue', sans-serif; font-size: 1.4rem; color: var(--white); letter-spacing: 2px; line-height: 1; }
+    .team-stat .ts-lbl { font-size: 0.65rem; letter-spacing: 2px; text-transform: uppercase; color: rgba(240,244,248,0.4); margin-top: 2px; }
+
+    .roster-section-label { font-family: 'Bebas Neue', sans-serif; font-size: 1.2rem; letter-spacing: 3px; color: var(--accent); margin: 30px 0 12px; text-transform: uppercase; }
+
+    .roster-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; margin-bottom: 10px; }
+    .roster-table th { background-color: var(--navy-light); color: var(--white); padding: 12px 16px; text-align: left; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; font-size: 0.75rem; border-bottom: 2px solid var(--red); }
+    .roster-table td { padding: 12px 16px; border-bottom: 1px solid rgba(255,255,255,0.07); color: rgba(240,244,248,0.85); }
+    .roster-table tr:hover td { background-color: var(--navy-mid); }
+    .featured { color: var(--white) !important; font-weight: 700; }
+    .featured-badge { font-size: 0.65rem; background-color: var(--red); color: var(--white); padding: 2px 6px; letter-spacing: 1px; text-transform: uppercase; margin-left: 8px; vertical-align: middle; }
+
+    footer { background: linear-gradient(135deg, var(--red) 0%, #a00d22 100%); text-align: center; padding: 20px 40px; font-size: 0.8rem; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,0.85); border-top: 4px solid var(--navy); }
+
+    @media (max-width: 768px) {
+      header h1 { font-size: 2.5rem; }
+      nav ul { flex-wrap: wrap; }
+      nav ul li a { padding: 12px 16px; font-size: 0.75rem; }
+      .team-section { padding: 30px 20px; }
+      .team-header { flex-direction: column; text-align: center; }
+      .roster-table { font-size: 0.8rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Boston Sports</h1>
+    <p>Your single source for scores, stats &amp; highlights</p>
+  </header>
+
+  <nav>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li>
+        <a href="teams.html" class="active">Teams ▾</a>
+        <ul class="dropdown">
+          <li><a href="#" onclick="showTab('football')">Football</a></li>
+          <li><a href="#" onclick="showTab('baseball')">Baseball</a></li>
+        </ul>
+      </li>
+      <li><a href="schedule.html">Schedule</a></li>
+      <li><a href="stats.html">Stats</a></li>
+      <li><a href="players.html">Players</a></li>
+      <li><a href="gallery.html">Gallery</a></li>
+    </ul>
+  </nav>
+
+  <div class="page-hero">
+    <h2>Teams</h2>
+    <p>Explore rosters and team info for Boston's top sports teams</p>
+  </div>
+
+  <div class="tab-bar">
+    <button class="active" onclick="showTab('football')">Football</button>
+    <button onclick="showTab('baseball')">Baseball</button>
+  </div>
+
+  <!-- ── PATRIOTS ── -->
+  <section class="team-section active" id="football">
+    <div class="team-header">
+      <div class="team-logo"><img src="images/New_England_Patriots_Logo.png" alt="New England Patriots" style="width:100%;height:100%;object-fit:contain;"></div>
+      <div class="team-info">
+        <h3>New England Patriots</h3>
+        <p>NFL · AFC East · Foxborough, MA</p>
+        <p class="record">2025 Record: 14–3 · AFC East Champions · Super Bowl LX Runners-Up</p>
+        <div class="team-stats-row">
+          <div class="team-stat"><span class="ts-val">14–3</span><span class="ts-lbl">Record</span></div>
+          <div class="team-stat"><span class="ts-val">1st</span><span class="ts-lbl">AFC East</span></div>
+          <div class="team-stat"><span class="ts-val">2nd</span><span class="ts-lbl">AFC Seed</span></div>
+          <div class="team-stat"><span class="ts-val">Super Bowl LX</span><span class="ts-lbl">Appearance</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="roster-section-label">Featured Players</div>
+    <table class="roster-table">
+      <thead>
+        <tr><th>#</th><th>Player</th><th>Position</th><th>2025 Highlight</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>10</td>
+          <td class="featured">Drake Maye <span class="featured-badge">Pro Bowl</span></td>
+          <td>QB</td>
+          <td>4,394 pass yds · 31 TD · #1 QBR in NFL</td>
+        </tr>
+        <tr>
+          <td>32</td>
+          <td class="featured">TreVeyon Henderson <span class="featured-badge">Rookie of the Month</span></td>
+          <td>RB</td>
+          <td>911 rush yds · 9 TD · 5.1 avg per carry</td>
+        </tr>
+        <tr>
+          <td>8</td>
+          <td class="featured">Stefon Diggs <span class="featured-badge">Pro Bowl</span></td>
+          <td>WR</td>
+          <td>85 rec · 1,013 yds · 4 100-yard games</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ── RED SOX ── -->
+  <section class="team-section" id="baseball">
+    <div class="team-header">
+      <div class="team-logo"><img src="images/Boston_Red_Sox_Logo.png" alt="Boston Red Sox" style="width:100%;height:100%;object-fit:contain;"></div>
+      <div class="team-info">
+        <h3>Boston Red Sox</h3>
+        <p>MLB · AL East · Boston, MA</p>
+        <p class="record">2025 Record: 89–73 · AL Wild Card · Lost Wild Card Series vs. NYY</p>
+        <div class="team-stats-row">
+          <div class="team-stat"><span class="ts-val">89–73</span><span class="ts-lbl">Record</span></div>
+          <div class="team-stat"><span class="ts-val">3rd</span><span class="ts-lbl">AL East</span></div>
+          <div class="team-stat"><span class="ts-val">Wild Card</span><span class="ts-lbl">Postseason</span></div>
+          <div class="team-stat"><span class="ts-val">Fenway Park</span><span class="ts-lbl">Home Stadium</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="roster-section-label">Featured Players</div>
+    <table class="roster-table">
+      <thead>
+        <tr><th>#</th><th>Player</th><th>Position</th><th>2025 Highlight</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>35</td>
+          <td class="featured">Garrett Crochet <span class="featured-badge">2x All-Star</span></td>
+          <td>SP</td>
+          <td>18-5 · 2.59 ERA · 255 SO — Led MLB in strikeouts</td>
+        </tr>
+        <tr>
+          <td>44</td>
+          <td class="featured">Aroldis Chapman <span class="featured-badge">Rivera Award</span></td>
+          <td>CP</td>
+          <td>32 SV · 103.8 mph top velocity · #1 ERA among relievers</td>
+        </tr>
+        <tr>
+          <td>19</td>
+          <td class="featured">Roman Anthony <span class="featured-badge">All-Rookie Team</span></td>
+          <td>OF</td>
+          <td>71 GP · .396 OBP · AL Rookie of the Month — August</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <footer>
+    <p>&copy; 2026 Boston Sports &mdash; IT 240 Web Fluency Project &mdash; Johnathan Adrien</p>
+  </footer>
+
+  <script>
+    function showTab(tab) {
+      document.querySelectorAll('.team-section').forEach(s => s.classList.remove('active'));
+      document.querySelectorAll('.tab-bar button').forEach(b => b.classList.remove('active'));
+      document.getElementById(tab).classList.add('active');
+      event.target.classList.add('active');
+    }
+  </script>
+</body>
+</html>

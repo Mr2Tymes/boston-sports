@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Boston Sports | Stats</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@400;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    :root { --red: #C8102E; --navy: #0D1B2A; --navy-mid: #1B2A3B; --navy-light: #1e3a5f; --white: #F0F4F8; --accent: #4A90C4; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Barlow', sans-serif; background-color: var(--navy); color: var(--white); line-height: 1.6; }
+    a { text-decoration: none; color: inherit; }
+
+    header { background: linear-gradient(135deg, var(--red) 0%, #a00d22 100%); padding: 28px 40px; text-align: center; border-bottom: 4px solid var(--navy); }
+    header h1 { font-family: 'Bebas Neue', sans-serif; font-size: 4rem; letter-spacing: 6px; color: var(--white); text-shadow: 3px 3px 0px rgba(0,0,0,0.4); }
+    header p { font-size: 0.95rem; color: rgba(255,255,255,0.85); letter-spacing: 3px; text-transform: uppercase; margin-top: 6px; }
+
+    nav { background-color: var(--navy-mid); border-bottom: 3px solid var(--red); position: sticky; top: 0; z-index: 100; }
+    nav ul { display: flex; list-style: none; justify-content: center; }
+    nav ul li { position: relative; }
+    nav ul li a { display: block; padding: 16px 28px; font-weight: 700; font-size: 0.85rem; letter-spacing: 2px; text-transform: uppercase; color: var(--white); transition: background 0.2s; }
+    nav ul li a:hover, nav ul li a.active { background-color: var(--red); }
+    nav ul li .dropdown { display: none; position: absolute; top: 100%; left: 0; background-color: var(--navy-light); border-top: 3px solid var(--red); min-width: 160px; z-index: 200; }
+    nav ul li .dropdown li a { padding: 12px 20px; font-size: 0.8rem; border-bottom: 1px solid rgba(255,255,255,0.08); }
+    nav ul li:hover .dropdown { display: block; }
+
+    .page-hero { background: linear-gradient(135deg, var(--navy-light) 0%, var(--navy-mid) 100%); padding: 40px; text-align: center; border-bottom: 4px solid var(--red); }
+    .page-hero h2 { font-family: 'Bebas Neue', sans-serif; font-size: 3rem; letter-spacing: 5px; color: var(--white); }
+    .page-hero p { color: rgba(240,244,248,0.7); margin-top: 8px; letter-spacing: 1px; }
+
+    .stats-container { padding: 60px 40px; }
+    .stats-block { margin-bottom: 60px; }
+    .stats-block h3 { font-family: 'Bebas Neue', sans-serif; font-size: 1.8rem; letter-spacing: 4px; color: var(--accent); margin-bottom: 20px; border-bottom: 1px solid rgba(74,144,196,0.3); padding-bottom: 10px; }
+    .stats-block h4 { font-family: 'Bebas Neue', sans-serif; font-size: 1.1rem; letter-spacing: 3px; color: var(--red); margin: 24px 0 12px; text-transform: uppercase; }
+
+    .stats-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; margin-bottom: 10px; }
+    .stats-table th { background-color: var(--navy-light); color: var(--white); padding: 12px 16px; text-align: left; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; font-size: 0.75rem; border-bottom: 2px solid var(--red); }
+    .stats-table td { padding: 12px 16px; border-bottom: 1px solid rgba(255,255,255,0.07); color: rgba(240,244,248,0.85); }
+    .stats-table td:first-child { font-weight: 700; color: var(--white); }
+    .stats-table tr:hover td { background-color: var(--navy-mid); }
+
+    footer { background: linear-gradient(135deg, var(--red) 0%, #a00d22 100%); text-align: center; padding: 20px 40px; font-size: 0.8rem; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,0.85); border-top: 4px solid var(--navy); }
+
+    @media (max-width: 768px) {
+      header h1 { font-size: 2.5rem; }
+      nav ul { flex-wrap: wrap; }
+      nav ul li a { padding: 12px 16px; font-size: 0.75rem; }
+      .stats-container { padding: 30px 20px; }
+      .stats-table { font-size: 0.78rem; }
+      .stats-table th, .stats-table td { padding: 10px 8px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Boston Sports</h1>
+    <p>Your single source for scores, stats &amp; highlights</p>
+  </header>
+
+  <nav>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li>
+        <a href="teams.html">Teams ▾</a>
+        <ul class="dropdown">
+          <li><a href="teams.html">Football</a></li>
+          <li><a href="teams.html">Baseball</a></li>
+        </ul>
+      </li>
+      <li><a href="schedule.html">Schedule</a></li>
+      <li><a href="stats.html" class="active">Stats</a></li>
+      <li><a href="players.html">Players</a></li>
+      <li><a href="gallery.html">Gallery</a></li>
+    </ul>
+  </nav>
+
+  <div class="page-hero">
+    <h2>Stats</h2>
+    <p>2025 season statistics for Boston's featured players</p>
+  </div>
+
+  <div class="stats-container">
+
+    <!-- ── SEASON STANDINGS ── -->
+    <div class="stats-block">
+      <h3>2025 Season Standings</h3>
+      <table class="stats-table">
+        <thead>
+          <tr><th>Team</th><th>Sport</th><th>W</th><th>L</th><th>Pct</th><th>Result</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>New England Patriots</td><td>NFL</td><td>14</td><td>3</td><td>.824</td><td>Super Bowl LX Runners-Up</td></tr>
+          <tr><td>Boston Red Sox</td><td>MLB</td><td>89</td><td>73</td><td>.549</td><td>Lost AL Wild Card Series</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ── PATRIOTS STATS ── -->
+    <div class="stats-block">
+      <h3>Patriots — 2025 Player Stats</h3>
+
+      <h4>Passing — Drake Maye</h4>
+      <table class="stats-table">
+        <thead>
+          <tr><th>Player</th><th>GP</th><th>ATT</th><th>CMP</th><th>CMP%</th><th>YDS</th><th>TD</th><th>INT</th><th>QBR</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Drake Maye #10</td><td>17</td><td>492</td><td>354</td><td>72%</td><td>4,394</td><td>31</td><td>8</td><td>77.1</td></tr>
+        </tbody>
+      </table>
+
+      <h4>Rushing — TreVeyon Henderson</h4>
+      <table class="stats-table">
+        <thead>
+          <tr><th>Player</th><th>GP</th><th>CAR</th><th>YDS</th><th>AVG</th><th>TD</th><th>REC</th><th>REC YDS</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>TreVeyon Henderson #32</td><td>17</td><td>180</td><td>911</td><td>5.1</td><td>9</td><td>35</td><td>221</td></tr>
+        </tbody>
+      </table>
+
+      <h4>Receiving — Stefon Diggs</h4>
+      <table class="stats-table">
+        <thead>
+          <tr><th>Player</th><th>GP</th><th>TGT</th><th>REC</th><th>YDS</th><th>AVG</th><th>100-YD Games</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Stefon Diggs #8</td><td>17</td><td>102</td><td>85</td><td>1,013</td><td>11.9</td><td>4</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ── RED SOX STATS ── -->
+    <div class="stats-block">
+      <h3>Red Sox — 2025 Player Stats</h3>
+
+      <h4>Batting — Roman Anthony</h4>
+      <table class="stats-table">
+        <thead>
+          <tr><th>Player</th><th>GP</th><th>OBP</th><th>Aug AVG</th><th>Aug HR</th><th>Aug RBI</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Roman Anthony #19</td><td>71</td><td>.396</td><td>.304</td><td>6</td><td>13</td></tr>
+        </tbody>
+      </table>
+
+      <h4>Pitching — Garrett Crochet &amp; Aroldis Chapman</h4>
+      <table class="stats-table">
+        <thead>
+          <tr><th>Player</th><th>Role</th><th>GP</th><th>W</th><th>L</th><th>ERA</th><th>SO</th><th>SV</th><th>WHIP</th><th>IP</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Garrett Crochet #35</td><td>SP</td><td>32</td><td>18</td><td>5</td><td>2.59</td><td>255</td><td>--</td><td>1.028</td><td>205.1</td></tr>
+          <tr><td>Aroldis Chapman #44</td><td>CP</td><td>67</td><td>5</td><td>3</td><td>1.17</td><td>85</td><td>32</td><td>0.70</td><td>61.1</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+
+  <footer>
+    <p>&copy; 2026 Boston Sports &mdash; IT 240 Web Fluency Project &mdash; Johnathan Adrien</p>
+  </footer>
+
+</body>
+</html>
